@@ -98,7 +98,14 @@ index 255434a1b..a9ac09d78 100644
 +    std::replace(cmdline.begin(), cmdline.end(), '\0', ' ');
  
      for (const auto& entry : android::base::Split(android::base::Trim(cmdline), " ")) {
-         std::vector<std::string> pieces = android::base::Split(entry, "=");
+        std::vector<std::string> pieces = android::base::Split(entry, "=");
+        if (pieces.size() == 2) {
++            std::string tt = pieces[1];
++            tt.replace(tt.find("++"),"++".size()," ");
+             fn(pieces[0], tt);
+         }
+     }
+ }
 diff --git a/rootdir/init.rc b/rootdir/init.rc
 index a9af0b094..183c8cc20 100644
 --- a/rootdir/init.rc
@@ -113,4 +120,5 @@ index a9af0b094..183c8cc20 100644
      # Note that tracefs may be mounted under debug, so we need to cross filesystems
 -- 
 2.34.1
+
 
